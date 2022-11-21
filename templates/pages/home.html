@@ -1,0 +1,291 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-sm-6">
+		<h1>Fyyur 🔥</h1>
+		<p class="lead">Where musical artists meet musical venues.</p>
+		<h3>
+			<a href="/venues"><button class="btn btn-primary btn-lg">Find a venue</button></a>
+			<a href="/venues/create"><button class="btn btn-default btn-lg">Post a venue</button></a>
+		</h3>
+		<h3>
+			<a href="/artists"><button class="btn btn-primary btn-lg">Find an artist</button></a>
+			<a href="/artists/create"><button class="btn btn-default btn-lg">Post an artist</button></a>
+		</h3>
+		<p class="lead">Publicize about your show for free.</p>
+		<h3>
+			<a href="/shows/create"><button class="btn btn-default btn-lg">Post a show</button></a>
+		</h3>
+	</div>
+	<div class="col-sm-6 hidden-sm hidden-xs">
+		<img id="front-splash" src="{{ url_for('static',filename='img/front-splash.jpg') }}" alt="Front Photo of Musical Band" />
+	</div>
+</div>
+
+{% if venues_count == 0 %}
+<section>
+	<h2 class="monospace">0 Latest Venues</h2>
+</section>
+{% else %}
+<section>
+	<h2 class="monospace">Latest Venues</h2>
+	<div id="carousel-latest-venues-xs" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators visible-xs hidden-sm hidden-md hidden-lg">
+			{%for venues_batch in venues|batch(1) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-venues-xs" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-venues-xs" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<div class="carousel-inner visible-xs hidden-sm hidden-md hidden-lg" role="listbox">
+			{%for venues_batch in venues|batch(1) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for venue in venues_batch %}
+						<a href="/venues/{{ venue.id }}">
+							<div class="col-xs-12">
+								<div class="tile tile-show">
+									<img src="{{ venue.image_link }}" alt="Venue Image" />
+									<h5>{{ venue.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<a class="left carousel-control visible-xs hidden-sm hidden-md hidden-lg" href="#carousel-latest-venues-xs" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control visible-xs hidden-sm hidden-md hidden-lg" href="#carousel-latest-venues-xs" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	  </div>
+
+	  <div id="carousel-latest-venues-sm" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators visible-sm hidden-xs hidden-md hidden-lg">
+			{%for venues_batch in venues|batch(2) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-venues-sm" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-venues-sm" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<div class="carousel-inner visible-sm hidden-xs hidden-md hidden-lg" role="listbox">
+			{%for venues_batch in venues|batch(2) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for venue in venues_batch %}
+						<a href="/venues/{{ venue.id }}">
+							<div class="col-sm-6">
+								<div class="tile tile-show">
+									<img src="{{ venue.image_link }}" alt="Venue Image" />
+									<h5>{{ venue.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<a class="left carousel-control visible-sm hidden-xs hidden-md hidden-lg" href="#carousel-latest-venues-sm" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control visible-sm hidden-xs hidden-md hidden-lg" href="#carousel-latest-venues-sm" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	  </div>
+
+	  <div id="carousel-latest-venues" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators hidden-xs hidden-sm">
+			{%for venues_batch in venues|batch(3) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-venues" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-venues" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<div class="carousel-inner visible-md visible-lg hidden-xs hidden-sm" role="listbox">
+			{%for venues_batch in venues|batch(3) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for venue in venues_batch %}
+						<a href="/venues/{{ venue.id }}">
+							<div class="col-md-4">
+								<div class="tile tile-show">
+									<img src="{{ venue.image_link }}" alt="Venue Image" />
+									<h5>{{ venue.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<a class="left carousel-control hidden-xs hidden-sm" href="#carousel-latest-venues" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control hidden-xs hidden-sm" href="#carousel-latest-venues" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	  </div>
+</section>
+{% endif %}
+
+{% if artists_count == 0 %}
+<section>
+	<h2 class="monospace">0 Latest Artists</h2>
+</section>
+{% else %}
+<section>
+	<h2 class="monospace">Latest Artists</h2>
+	<div id="carousel-latest-artists-xs" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators visible-xs">
+			{%for artists_batch in artists|batch(1) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-artists-xs" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-artists-xs" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner visible-xs" role="listbox">
+			{%for artists_batch in artists|batch(1) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for artist in artists_batch %}
+						<a href="/artists/{{ artist.id }}">
+							<div class="col-xs-12">
+								<div class="tile tile-show">
+									<img src="{{ artist.image_link }}" alt="Artist Image" />
+									<h5>{{ artist.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<!-- Controls -->
+		<a class="left carousel-control visible-xs" href="#carousel-latest-artists-xs" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control visible-xs" href="#carousel-latest-artists-xs" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	</div>
+	<div id="carousel-latest-artists-sm" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators visible-sm">
+			{%for artists_batch in artists|batch(2) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-artists-sm" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-artists-sm" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner visible-sm" role="listbox">
+			{%for artists_batch in artists|batch(2) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for artist in artists_batch %}
+						<a href="/artists/{{ artist.id }}">
+							<div class="col-sm-6">
+								<div class="tile tile-show">
+									<img src="{{ artist.image_link }}" alt="Artist Image" />
+									<h5>{{ artist.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>	  
+		<!-- Controls -->
+		<a class="left carousel-control visible-sm" href="#carousel-latest-artists-sm" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control visible-sm" href="#carousel-latest-artists-sm" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	</div>
+	<div id="carousel-latest-artists" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
+		<ol class="carousel-indicators hidden-xs hidden-sm">
+			{%for artists_batch in artists|batch(3) %}
+				{% if loop.index0 == 0 %}
+					<li data-target="#carousel-latest-artists" data-slide-to="{{loop.index0}}" class="active"></li>
+				{% else %}
+					<li data-target="#carousel-latest-artists" data-slide-to="{{loop.index0}}"></li>
+				{% endif %}
+			{% endfor %}
+		</ol>
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner hidden-xs hidden-sm" role="listbox">
+			{%for artists_batch in artists|batch(3) %}
+				{% if loop.index == 1 %}
+					<div class="item active">
+				{% else %}
+					<div class="item">
+				{% endif %}	
+				{%for artist in artists_batch %}
+						<a href="/artists/{{ artist.id }}">
+							<div class="col-md-4">
+								<div class="tile tile-show">
+									<img src="{{ artist.image_link }}" alt="Artist Image" />
+									<h5>{{ artist.name }}</h5>
+								</div>
+							</div>
+						</a>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
+		<!-- Controls -->
+		<a class="left carousel-control hidden-xs hidden-sm" href="#carousel-latest-artists" role="button" data-slide="prev">
+		  <span class="icon-prev" aria-hidden="true"></span>
+		  <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control hidden-xs hidden-sm" href="#carousel-latest-artists" role="button" data-slide="next">
+		  <span class="icon-next" aria-hidden="true"></span>
+		  <span class="sr-only">Next</span>
+		</a>
+	</div>
+</section>
+{% endif %}
+
+{% endblock %}
